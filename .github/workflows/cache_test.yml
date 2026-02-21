@@ -18,4 +18,9 @@ jobs:
           key: cache-2bebadd
 
       - name: prime-cache-2bebadd
-        run: echo "Cache match result: ${{ steps.cache-step.outputs.cache-hit == 'true' && 'Hit' || 'Miss' }} (Value: ${{ steps.cache-step.outputs.cache-hit }})"
+        run: |
+          if [ "${{ steps.cache-step.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache hit result: Hit"
+          else
+            echo "Cache hit result: Miss"
+          fi
