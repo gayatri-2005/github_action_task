@@ -1,0 +1,21 @@
+name: Cache Prime Task
+on: [push, workflow_dispatch]
+jobs:
+  cache-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create dummy dependency file
+        run: echo "cache data" > dummy_dep.txt
+
+      - name: Cache dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: dummy_dep.txt
+          key: cache-2bebadd
+
+      - name: prime-cache-2bebadd
+        run: echo "Cache match result: ${{ steps.cache-step.outputs.cache-hit == 'true' && 'Hit' || 'Miss' }} (Value: ${{ steps.cache-step.outputs.cache-hit }})"
