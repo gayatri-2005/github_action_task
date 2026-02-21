@@ -1,8 +1,29 @@
-name: Test Action
+name: Combined GitHub Action
 on: [push, workflow_dispatch]
 jobs:
-  test:
+  everything-job:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: 24f2000013@ds.study.iitm.ac.in
-        run: echo "Hello, world!"
+        run: echo "Hello Gayatri!"
+
+      - name: Create dummy dependency file
+        run: echo "cache-content" > dummy.txt
+
+      - name: Cache dependencies
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: dummy.txt
+          key: cache-2bebadd
+
+      - name: prime-cache-2bebadd
+        run: |
+          if [ "${{ steps.cache-step.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache hit result: Hit"
+          else
+            echo "Cache hit result: Miss"
+          fi
