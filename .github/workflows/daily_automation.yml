@@ -1,4 +1,4 @@
-name: Daily Automated Update
+﻿name: Daily Automated Update
 on:
   schedule:
     - cron: '15 0 * * *' # Runs at 00:15 UTC every day
@@ -23,5 +23,6 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "24f2000013@ds.study.iitm.ac.in"
           git add activity_log.txt
-          git commit -m "Automated daily update"
+          git commit --allow-empty -m "Automated daily update"
+          git pull --rebase origin master 
           git push
