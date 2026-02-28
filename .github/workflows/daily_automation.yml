@@ -1,0 +1,27 @@
+name: Daily Automated Update
+on:
+  schedule:
+    - cron: '15 0 * * *' # Runs at 00:15 UTC every day
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Action by 24f2000013@ds.study.iitm.ac.in
+        run: |
+          echo "Process started for 24f2000013@ds.study.iitm.ac.in"
+
+      - name: Create daily commit
+        run: |
+          echo "Automated update on $(date)" >> activity_log.txt
+          git config --global user.name "GitHub Action"
+          git config --global user.email "24f2000013@ds.study.iitm.ac.in"
+          git add activity_log.txt
+          git commit -m "Automated daily update"
+          git push
